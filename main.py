@@ -1,14 +1,14 @@
 import sys
-from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtGui import QColor, QPainter, QBrush
+from UI import Ui_Form
 import random
 
 
-class Window(QWidget):
+class Window(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.initUi()
 
     def initUi(self):
@@ -20,7 +20,7 @@ class Window(QWidget):
 class Board(QWidget):
     draw_circle = False
 
-    def add_circle(self, event):
+    def add_circle(self):
         self.draw_circle = True
         width, height = self.width(), self.height()
         self.size = random.randrange(min(width, height))
@@ -29,7 +29,7 @@ class Board(QWidget):
 
     def paintEvent(self, event):
         if self.draw_circle:
-            color = QColor('yellow')
+            color = QColor(random.randrange(255), random.randrange(255), random.randrange(255))
             brush = QBrush(color)
             painter = QPainter(self)
             painter.setBrush(brush)
